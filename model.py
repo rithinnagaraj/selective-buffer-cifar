@@ -54,8 +54,15 @@ if __name__ == "__main__":
 	model = ResNet50WithHiddenStates(num_classes=5, hidden_dim=512, pretrained=False)
 	dummy_input = torch.randn(4, 3, 32, 32)
 
-	class_distribution, last_hidden, second_to_last_hidden = model(dummy_input)
+	arr = []
+
+	for i in range(0, 2):
+		class_distribution, last_hidden, second_to_last_hidden = model(dummy_input)
+		arr.append(last_hidden)
+
+	out_tensor = torch.cat(arr, dim=0)
 
 	print("class_distribution shape:", class_distribution.shape)
 	print("last_hidden shape:", last_hidden.shape)
 	print("second_to_last_hidden shape:", second_to_last_hidden.shape)
+	print("Concatenated last_hidden shape:", out_tensor.shape)
